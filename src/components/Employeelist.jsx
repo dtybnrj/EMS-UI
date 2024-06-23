@@ -35,9 +35,12 @@ export const Employeelist = () => {
 
   return (
     <div className='container mx-auto my-8'>
-        <div className='h-12 float-left'>
-            <button onClick={()=>navigate("/addEmployee")} className='rounded bg-slate-600 text-white px-3 py-3'>
+        <div className='d-flex align-items-center justify-content-center full-height mt-5'>
+            <button onClick={()=>navigate("/addEmployee")} className='rounded bg-slate-600 text-white px-3 py-3 me-3 mb-1'>
                 Add Employee
+            </button>
+            <button onClick={()=>navigate("/getEmployeeAttendance")} className='rounded bg-slate-600 text-white px-3 py-3'>
+                Employee attendance list
             </button>
         </div>
         <div className='flex shadow border-b'>

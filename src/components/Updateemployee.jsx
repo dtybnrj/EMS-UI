@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import EmployeeService from '../services/EmployeeService'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const Updateemployee = () => {
+
+    const navigate = useNavigate();
 
     const[loading, setLoading]=useState(true);
     const[employeefname, setEmployeefname]=useState(null);
     const[employeelname, setEmployeelname]=useState(null);
     const[employeeemail, setEmployeeemail]=useState(null);
     const params = useParams();
+    const empid = params.id;
 
     useEffect(()=>{
         const fetchData = async ()=>{
             setLoading(true);
             try {
-                const res  = await EmployeeService.getEmployeeById(params.id);
+                const res  = await EmployeeService.getEmployeeById(empid);
                 console.log(res);
                 setEmployeefname(res.data.firstName);
                 setEmployeelname(res.data.lastName);
@@ -40,7 +43,17 @@ export const Updateemployee = () => {
     }
 
     function updateEmployee(){
-
+        var emp = {};
+        emp['id'] = empid
+        emp['firstName'] = employeefname;
+        emp['lastName'] = employeelname;
+        emp['emailId'] = employeeemail;
+        EmployeeService.updateEmployeeById(empid,emp).then((res)=>{
+            console.log(res);
+            navigate("/employeeList");
+        }).catch((error)=>{
+            console.log(error);
+        })
     }
 
     function reset(){
