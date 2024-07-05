@@ -34,6 +34,7 @@ export default function Loginpage() {
 
   return (
     <>
+      <div className="col-md-6 m-auto">
       <Header
         heading="Login to your account"
         paragraph="Don't have an account yet? "
@@ -41,6 +42,7 @@ export default function Loginpage() {
         linkUrl="/signup"
       />
       <Login />
+      </div>
     </>
   );
 }
