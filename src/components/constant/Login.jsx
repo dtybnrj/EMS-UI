@@ -26,12 +26,16 @@ export default function Login() {
 
 const authenticateUser = async () =>{
   try {
-    const userData = await EMSUserService.login(loginState[0], loginState[1]);
+    const userData = await EMSUserService.login(loginState['email-address'], loginState['password']);
     console.log(userData);
     if (userData.token) {
       localStorage.setItem("token", userData.token);
       localStorage.setItem("role", userData.role);
-      navigate("/profile");
+      if(userData.role=="ADMIN"){
+      navigate("/employeeList");
+      }else {
+        navigate("/profile");
+      }
     } else {
       setError(userData.message);
     }

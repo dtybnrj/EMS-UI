@@ -1,12 +1,22 @@
 import axios from "axios";
 
-const EMPLOYEE_API_BASE_URL = "http://localhost:8080/EMS/api/v1/employees";
+const EMS_AUTH_BASE_URL = "http://localhost:8080/EMS/auth/";
 
 class EMSUserService{
 
     static async login(email, password){
         try{
-            const response = await axios.post(`${EMPLOYEE_API_BASE_URL}/auth/login`, {email, password})
+            const response = await axios.post(`${EMS_AUTH_BASE_URL}login`, {email, password})
+            return response.data;
+
+        }catch(err){
+            throw err;
+        }
+    }
+
+    static async register(register){
+        try{
+            const response = await axios.post(`${EMS_AUTH_BASE_URL}register`, register)
             return response.data;
 
         }catch(err){

@@ -10,27 +10,27 @@ export default function Loginpage() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      const userData = await EMSUserService.login(email, password);
-      console.log(userData);
-      if (userData.token) {
-        localStorage.setItem("token", userData.token);
-        localStorage.setItem("role", userData.role);
-        navigate("/profile");
-      } else {
-        setError(userData.message);
-      }
-    } catch (error) {
-      console.log(error);
-      setError(error.message);
-      setTimeout(() => {
-        setError("");
-      }, 5000);
-    }
-  };
+  //   try {
+  //     const userData = await EMSUserService.login(email, password);
+  //     console.log(userData);
+  //     if (userData.token) {
+  //       localStorage.setItem("token", userData.token);
+  //       localStorage.setItem("role", userData.role);
+  //       navigate("/profile");
+  //     } else {
+  //       setError(userData.message);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     setError(error.message);
+  //     setTimeout(() => {
+  //       setError("");
+  //     }, 5000);
+  //   }
+  // };
 
   return (
     <>

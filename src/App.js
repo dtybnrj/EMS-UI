@@ -8,6 +8,7 @@ import Attendancelist from './components/Attendancelist';
 import Loginpage from './components/auth/Loginpage';
 import EMSUserService from './services/EMSUserService';
 import ProfilePage from './components/ProfilePage';
+import RegistrationPage from './components/auth/RegistrationPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/" element={<Loginpage />} />
           <Route exact path="/login" element={<Loginpage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route exact path="/signup" element={<RegistrationPage />} />
           {EMSUserService.adminOnly() && (
             <>
               <Route path='/employeeList' element={<Employeelist></Employeelist>}></Route>
