@@ -1,9 +1,9 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const EMS_AUTH_BASE_URL = "http://localhost:8080/EMS/auth/";
 
 class EMSUserService{
-
     static async login(email, password){
         try{
             const response = await axios.post(`${EMS_AUTH_BASE_URL}login`, {email, password})
@@ -25,8 +25,13 @@ class EMSUserService{
     }
 
     static logout(){
-        localStorage.removeItem('token')
-        localStorage.removeItem('role')
+        const apiClient = axios.create({
+            baseURL: EMS_AUTH_BASE_URL,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          });
+       return apiClient.post(EMS_AUTH_BASE_URL+"logout")
     }
 
     static isAuthenticated(){

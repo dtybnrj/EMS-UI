@@ -3,7 +3,7 @@ import { loginFields } from "./formField";
 import Input from "./Input";
 import FormExtra from "./FormExtra";
 import FormAction from "./FormAction";
-import EMSUserService from "../../services/EMSUserService";
+import { useAuth } from "../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const fields = loginFields;
@@ -12,44 +12,33 @@ fields.forEach((field) => (fieldsState[field.id] = ""));
 
 export default function Login() {
   const [loginState, setLoginState] = useState(fieldsState);
+  const { login } = useAuth();
   const navigate = useNavigate();
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setLoginState({ ...loginState, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit=(e)=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
     authenticateUser();
-}
+  }
 
-const authenticateUser = async () =>{
-  try {
-    const userData = await EMSUserService.login(loginState['email-address'], loginState['password']);
-    console.log(userData);
-    if (userData.token) {
-      localStorage.setItem("token", userData.token);
-      localStorage.setItem("role", userData.role);
-      if(userData.role=="ADMIN"){
-      navigate("/employeeList");
-      }else {
-        navigate("/profile");
+  const authenticateUser = async () => {
+    const result = await login(loginState);
+    if (result.success) {
+      if (result.role === 'ADMIN') {
+        navigate('/employeeList');
+      } else {
+        navigate('/profile');
       }
     } else {
-      setError(userData.message);
+      console.error(result.message);
     }
-  } catch (error) {
-    console.log(error);
-    setError(error.message);
-    setTimeout(() => {
-      setError("");
-    }, 5000);
   }
-}
 
   return (
-    <form className="mt-8 space-y-6">
+    <form className="mt-8 space-y-6 w-full max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
       <div className="-space-y-px">
         {fields.map((field) => (
           <Input
@@ -66,8 +55,8 @@ const authenticateUser = async () =>{
           />
         ))}
       </div>
-      <FormExtra/>
-      <FormAction handleSubmit={handleSubmit} text="Login"/>
+      <FormExtra />
+      <FormAction handleSubmit={handleSubmit} text="Login" />
     </form>
   );
 }
