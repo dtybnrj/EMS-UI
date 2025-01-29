@@ -21,7 +21,7 @@ export default function Navbar() {
       <div className="h-16 px-8 flex items-center justify-between">
         {/* Logo or Brand Name */}
         <div className="flex items-center">
-          <img src="logo.png" alt="Logo" className="h-10 mr-3" />
+          <img src="/logo-no-background.png" alt="Logo" className="h-10 mr-3" />
           <p className="text-white font-bold text-lg">Employee Management System</p>
         </div>
 
